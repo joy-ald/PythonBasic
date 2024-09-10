@@ -1,0 +1,24 @@
+# check for data consistency in a database using numpy and DataFrame
+
+import pandas as pd
+
+# Create a sample DataFrame
+data = {
+    'age': [25, -1, 130, 45, None],
+    'name': ['Alice', 'Bob', 'Charlie', None, 'David'],
+    'category': ['A', 'X', 'B', 'B', 'D']
+}
+
+df = pd.DataFrame(data)
+
+# Detect missing values
+print(df.isnull().sum())
+
+# Detect wrong values (example: invalid age range)
+invalid_age = df[(df['age'] < 0) | (df['age'] > 120)]
+print("Invalid ages:\n", invalid_age)
+
+# Detect invalid categories
+valid_categories = ['A', 'B', 'C']
+invalid_category = df[~df['category'].isin(valid_categories)]
+print("Invalid categories:\n", invalid_category)
